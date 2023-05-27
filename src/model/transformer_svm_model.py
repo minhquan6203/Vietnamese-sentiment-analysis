@@ -9,7 +9,7 @@ from utils.svm_kernel import get_kernel
 class Trans_SVM_Model(nn.Module):
     def __init__(self,config: Dict, num_labels: int):
      
-        super(Model, self).__init__()
+        super(Trans_SVM_Model, self).__init__()
         self.num_labels = num_labels
         self.intermediate_dims = config["model"]["intermediate_dims"]
         self.dropout=config["model"]["dropout"]
