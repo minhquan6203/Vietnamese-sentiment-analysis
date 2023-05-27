@@ -7,17 +7,17 @@ import pandas as pd
 from torch.utils.data import DataLoader
 import torch
 import transformers
-from utils.builder import build_model
-
+from utils.builder import get_model
+from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
 class Predict:
     def __init__(self,config: Dict):
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-        self.answer_space=[0,1]
+        self.answer_space=[0,1,2]
         self.model_name =config["model"]["name"]
         self.checkpoint_path=os.path.join(config["train"]["output_dir"], config["model"]["name"], config["inference"]["checkpoint"], "pytorch_model.bin")
         self.test_path=config['inference']['test_dataset']
         self.bath_size=config['inference']['batch_size']
-        self.model = build_model(config,num_labels=len(self.answer_space))
+        self.model = get_model(config,len(self.answer_space))
     def predict_submission(self):
         transformers.logging.set_verbosity_error()
         logging.basicConfig(level=logging.INFO)
@@ -32,19 +32,20 @@ class Predict:
         # Obtain the prediction from the model
         logging.info("Obtaining predictions...")
         test_set =self.get_dataloader(self.test_path)
-        submits=[]
-        ids=[]
+        y_preds=[]
+        gts=[]
         self.model.eval()
         with torch.no_grad():
             for item in test_set:
-                # item['id1_text'],item['id2_text'] =item['id1_text'].to(self.device),item['id2_text'].to(self.device)
-                output = self.model(item['id1_text'],item['id2_text'])
+                output = self.model(item['text'])
                 preds = output["logits"].argmax(axis=-1).cpu().numpy()
                 answers = [self.answer_space[i] for i in preds]
-                submits.extend(answers)
-                ids.extend(item['id'].cpu().numpy())
-
-        data = {'id': ids,'label': submits }
+                y_preds.extend(answers)
+                gts.extend(item['label'].cpu().numpy())
+        print('accuracy on test:', accuracy_score(gts,y_preds))
+        print('f1 macro on test:', f1_score(gts,y_preds,average='macro'))
+        print('confusion matrix:\n',confusion_matrix(gts,y_preds))
+        data = {'preds': y_preds,'gts': gts }
         df = pd.DataFrame(data)
         df.to_csv('./submission.csv', index=False)
     def load_test_set(self,file_path):
@@ -52,9 +53,8 @@ class Predict:
         annotations=[]
         for i in range(len(test_set)):
             ann={
-                'id': test_set['id'][i],
-                'id1_text':test_set['id1_text'][i],
-                'id2_text':test_set['id2_text'][i]
+                'label': test_set['sentiment'][i],
+                'text':test_set['sentence'][i],
             }
             annotations.append(ann)
         return annotations
