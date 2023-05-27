@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from text_module.text_embedding import Text_Embedding
 from attention_module.attentions import MultiHeadAtt
-from encoder_module.uni_model_encoder import UniModalEncoder
+from encoder_module.uni_modal_encoder import UniModalEncoder
 
 class Trans_Model(nn.Module):
     def __init__(self,config: Dict, num_labels: int):
