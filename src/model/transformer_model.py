@@ -6,10 +6,10 @@ from text_module.text_embedding import Text_Embedding
 from attention_module.attentions import MultiHeadAtt
 from encoder_module.uni_model_encoder import UniModalEncoder
 
-class Model(nn.Module):
+class Trans_Model(nn.Module):
     def __init__(self,config: Dict, num_labels: int):
      
-        super(Model, self).__init__()
+        super(Trans_Model, self).__init__()
         self.num_labels = num_labels
         self.intermediate_dims = config["model"]["intermediate_dims"]
         self.dropout=config["model"]["dropout"]
@@ -31,7 +31,7 @@ class Model(nn.Module):
         feature_attended = self.attention_weights(torch.tanh(encoded_feature))
         
         attention_weights = torch.softmax(feature_attended, dim=1)
-        feature_attended = torch.sum(attention_weights.unsqueeze(-1) * encoded_feature, dim=1)
+        feature_attended = torch.sum(attention_weights * encoded_feature, dim=1)
         
         output = self.process(feature_attended)
         logits = self.classifier(output)
@@ -48,6 +48,6 @@ class Model(nn.Module):
         return out
 
 
-def createModel(config: Dict, answer_space: List[str]) -> Model:
-    return Model(config, num_labels=len(answer_space))
+def createTrans_Model(config: Dict, answer_space: List[str]) -> Trans_Model:
+    return Trans_Model(config, num_labels=len(answer_space))
 

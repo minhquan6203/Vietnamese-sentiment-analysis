@@ -3,10 +3,10 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from text_module.text_embedding import Text_Embedding
-from encoder_module.uni_model_encoder import UniModalEncoder
+from encoder_module.uni_modal_encoder import UniModalEncoder
 from utils.svm_kernel import get_kernel
 
-class Model(nn.Module):
+class Trans_SVM_Model(nn.Module):
     def __init__(self,config: Dict, num_labels: int):
      
         super(Model, self).__init__()
@@ -37,7 +37,7 @@ class Model(nn.Module):
         feature_attended = self.attention_weights(torch.tanh(encoded_feature))
         
         attention_weights = torch.softmax(feature_attended, dim=1)
-        feature_attended = torch.sum(attention_weights.unsqueeze(-1) * encoded_feature, dim=1)
+        feature_attended = torch.sum(attention_weights * encoded_feature, dim=1)
         
         output = self.process(feature_attended)
         output = output.view(output.size(0),output.size(1)*output.size(2))
@@ -55,5 +55,5 @@ class Model(nn.Module):
         return out
 
 
-def createModel(config: Dict, answer_space: List[str]) -> Model:
-    return Model(config, num_labels=len(answer_space))
+def createTrans_SVM_Model(config: Dict, answer_space: List[str]) -> Trans_SVM_Model:
+    return Trans_SVM_Model(config, num_labels=len(answer_space))

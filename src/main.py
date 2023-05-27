@@ -14,7 +14,7 @@ from task.train import train_model
 from eval_metric.evaluate import ScoreCalculator
 from utils.utils import countTrainableParameters
 from task.inference import Predict
-
+from utils.builder import build_model
 
 def training(config,device):
     data = loadDataset(config)
@@ -23,7 +23,7 @@ def training(config,device):
     multimodal_collator = createDataCollator(config)
     logging.info("Created data collator")
     
-    multimodal_model = createModel(config, data["answer_space"]).to(device)
+    multimodal_model = build_model(config, data["answer_space"]).to(device)
     logging.info("Initialized model for training")
     
     calculator = ScoreCalculator(data["answer_space"])

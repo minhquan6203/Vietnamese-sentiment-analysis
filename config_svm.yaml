@@ -20,12 +20,13 @@ tokenizer:
   return_attention_mask: True
 
 text_embedding:
-  text_encoder: roberta-base
+  text_encoder: vinai/phobert-base
   d_features: 768
   d_model: 128
   dropout: 0.2
 
 model:
+  type_model: svm
   name: dsaa_2023  # Custom name for the multimodal model
   intermediate_dims: 128
   dropout: 0.2

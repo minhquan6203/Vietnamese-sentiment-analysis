@@ -5,10 +5,10 @@ import torch.nn.functional as F
 from text_module.text_embedding import Text_Embedding
 from utils.svm_kernel import get_kernel
 
-class Model(nn.Module):
+class SVM_Model(nn.Module):
     def __init__(self,config: Dict, num_labels: int):
      
-        super(Model, self).__init__()
+        super(SVM_Model, self).__init__()
         self.num_labels = num_labels
         self.intermediate_dims = config["model"]["intermediate_dims"]
         self.dropout=config["model"]["dropout"]
@@ -49,5 +49,5 @@ class Model(nn.Module):
         return out
 
 
-def createModel(config: Dict, answer_space: List[str]) -> Model:
-    return Model(config, num_labels=len(answer_space))
+def createSVM_Model(config: Dict, answer_space: List[str]) -> SVM_Model:
+    return SVM_Model(config, num_labels=len(answer_space))
