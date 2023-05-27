@@ -9,7 +9,6 @@ import transformers
 
 from data_utils.load_data import loadDataset
 from data_utils.data_collator import createDataCollator
-from model.transformer_model import createModel
 from task.train import train_model
 from eval_metric.evaluate import ScoreCalculator
 from utils.utils import countTrainableParameters
