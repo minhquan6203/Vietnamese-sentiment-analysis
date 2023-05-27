@@ -75,4 +75,4 @@ metrics:
 inference:
   checkpoint: checkpoint-756
   test_dataset: /content/data/test.csv
-  batch_size: 1024
+  batch_size: 512

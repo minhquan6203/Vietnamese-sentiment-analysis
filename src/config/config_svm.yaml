@@ -47,8 +47,8 @@ train:
   save_strategy: epoch
   save_total_limit: 2 
   metric_for_best_model: "eval_f1"
-  per_device_train_batch_size: 4096
-  per_device_eval_batch_size: 4096
+  per_device_train_batch_size: 256
+  per_device_eval_batch_size: 256
   remove_unused_columns: False
   dataloader_num_workers: 4
   load_best_model_at_end: True
@@ -61,4 +61,4 @@ metrics:
 inference:
   checkpoint: checkpoint-756
   test_dataset: /content/data/test.csv
-  batch_size: 1024
+  batch_size: 512
