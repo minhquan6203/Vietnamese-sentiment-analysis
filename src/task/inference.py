@@ -7,7 +7,7 @@ import pandas as pd
 from torch.utils.data import DataLoader
 import torch
 import transformers
-from model.transformer_model import Model
+from utils.builder import build_model
 
 class Predict:
     def __init__(self,config: Dict):
@@ -17,7 +17,7 @@ class Predict:
         self.checkpoint_path=os.path.join(config["train"]["output_dir"], config["model"]["name"], config["inference"]["checkpoint"], "pytorch_model.bin")
         self.test_path=config['inference']['test_dataset']
         self.bath_size=config['inference']['batch_size']
-        self.model = Model(config,num_labels=len(self.answer_space))
+        self.model = build_model(config,num_labels=len(self.answer_space))
     def predict_submission(self):
         transformers.logging.set_verbosity_error()
         logging.basicConfig(level=logging.INFO)

@@ -11,7 +11,6 @@ from data_utils.load_data import loadDataset
 from data_utils.data_collator import createDataCollator
 from task.train import train_model
 from eval_metric.evaluate import ScoreCalculator
-from utils.utils import countTrainableParameters
 from task.inference import Predict
 from utils.builder import build_model
 
@@ -40,7 +39,6 @@ def training(config,device):
     os.makedirs(config["metrics"]["metrics_folder"], exist_ok=True)
     
     metrics = {**training_metrics[2], **eval_metrics}
-    metrics["num_params"] = countTrainableParameters(multimodal_model)
     
     metrics_path = os.path.join(config["metrics"]["metrics_folder"], config["metrics"]["metrics_file"])
     json.dump(
