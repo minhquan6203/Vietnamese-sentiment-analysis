@@ -12,10 +12,14 @@ def loadDataset(config: Dict) -> Dict:
         }
     )
 
-    answer_space = [0,1,2]
+    answer_space = [0, 1, 2]
     dataset = dataset.map(
-        lambda examples: {'label': [answer_space.index(ans) for ans in examples['sentiment']]},batched=True
+        lambda examples: {'label': [answer_space.index(ans) for ans in examples['sentiment']]},
+        batched=True
     )
+    
+    dataset = dataset.shuffle(123)  # Xáo trộn tập dữ liệu
+    
     return {
         "dataset": dataset,
         "answer_space": answer_space

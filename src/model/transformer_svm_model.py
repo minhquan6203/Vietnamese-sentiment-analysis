@@ -26,7 +26,7 @@ class Trans_SVM_Model(nn.Module):
             nn.Dropout(self.dropout),
         )
         self.encoder = UniModalEncoder(config)
-        self.classifier = get_kernel(self.kernel_type,self.max_length, self.num_labels, self.gamma, self.r, self.degree)
+        self.classifier = get_kernel(self.kernel_type,self.intermediate_dims, self.num_labels, self.gamma, self.r, self.degree)
         self.attention_weights = nn.Linear(self.intermediate_dims, 1)
         self.criterion = nn.CrossEntropyLoss()
 
@@ -40,7 +40,7 @@ class Trans_SVM_Model(nn.Module):
         feature_attended = torch.sum(attention_weights * encoded_feature, dim=1)
         
         output = self.process(feature_attended)
-        output = output.view(output.size(0),output.size(1)*output.size(2))
+        # output = output.view(output.size(0),output.size(1)*output.size(2))
         logits = self.classifier(output)
         logits = F.log_softmax(logits, dim=-1)
         out = {
