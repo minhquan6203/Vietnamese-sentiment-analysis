@@ -27,7 +27,7 @@ text_embedding:
 
 model:
   type_model: svm
-  name: dsaa_2023  # Custom name for the multimodal model
+  name: sentiment_analysis  # Custom name for the multimodal model
   intermediate_dims: 128
   dropout: 0.2
 

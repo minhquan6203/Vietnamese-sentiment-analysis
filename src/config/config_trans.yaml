@@ -6,12 +6,6 @@ data:
   train_dataset: train.csv
   val_dataset: dev.csv
 
-svm:
-  gamma: 0.1
-  degree: 2
-  r: 1
-  kernel_type: custom
-
 tokenizer:
   padding: True
   max_length: 64
@@ -41,8 +35,8 @@ encoder:
   layers: 4
 
 model:
-type_model: trans_svm
-  name: dsaa_2023  # Custom name for the multimodal model
+  type_model: trans
+  name: sentiment_analysis  # Custom name for the multimodal model
   intermediate_dims: 128
   dropout: 0.2
 
@@ -62,8 +56,8 @@ train:
   save_strategy: epoch
   save_total_limit: 2 
   metric_for_best_model: "eval_f1"
-  per_device_train_batch_size: 256
-  per_device_eval_batch_size: 256
+  per_device_train_batch_size: 1024
+  per_device_eval_batch_size: 1024
   remove_unused_columns: False
   dataloader_num_workers: 2
   load_best_model_at_end: True
