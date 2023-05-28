@@ -12,4 +12,4 @@ Một khía cạnh quan trọng khác của phân tích cảm xúc tiếng Việ
 
 Mặc dù đối mặt với những thách thức này, phân tích cảm xúc tiếng Việt đang ngày càng được phát triển và áp dụng rộng rãi. Các nhà nghiên cứu và các công ty công nghệ đang đưa ra nhiều giải pháp sáng tạo để cải thiện độ chính xác và hiệu suất của các hệ thống phân tích cảm xúc tiếng Việt
 
-Repo này tập trung vào transformers để giải quyết bài toán trên bộ dữ liệu UIT-VSFC (version 1.0) - Vietnamese Students’ Feedback Corpus (https://nlp.uit.edu.vn/datasets#h.p_4Brw8L-cbfTe) 
+Repo này tập trung vào transformers để giải quyết bài toán trên bộ dữ liệu UIT-VSFC (version 1.0) - Vietnamese Students’ Feedback Corpus (https://nlp.uit.edu.vn/datasets#h.p_4Brw8L-cbfTe) và bộ dữ liệu UIT-VSMEC (version 1.0) - Vietnamese Social Media Emotion Corpus (https://nlp.uit.edu.vn/datasets#h.p_FxJKMfavctsJ)
