@@ -3,7 +3,6 @@ from dataclasses import dataclass
 from typing import Dict, List
 from PIL import Image
 import torch
-from data_utils.data_preprocessing import scanerr
 
 class data_Collator:
     def __init__(self, config: Dict):
