@@ -39,7 +39,7 @@ def scanerr(sentence,word_seg=False):
         or 'mi đắng'  in sentence or 'tiếng pháo hoa'  in sentence or "tới bên em" in sentence):
             sentence = 'bình thường'
     if word_seg:
-        return rdrsegmenter.word_segment(sentence)
+        return rdrsegmenter.word_segment(sentence)[0]
     else:
         return sentence
 
@@ -48,13 +48,13 @@ def main():
   dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/dev.csv')
   test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/test.csv')
   word_seg=False
-
   for i in range(len(train)):
-        train['sentence'][i]=scanerr(train['sentence'][i],word_seg)[0]
+    train['sentence'][i]=scanerr(train['sentence'][i],word_seg)
   for i in range(len(dev)):
-    dev['sentence'][i]=scanerr(dev['sentence'][i],word_seg)[0]
+    dev['sentence'][i]=scanerr(dev['sentence'][i],word_seg)
   for i in range(len(test)):
-    test['sentence'][i]=scanerr(test['sentence'][i],word_seg)[0]
+    test['sentence'][i]=scanerr(test['sentence'][i],word_seg)
+        
 
   train.to_csv('/content/vietnamese-sentiment-analysis/data/train_new.csv')
   dev.to_csv('/content/vietnamese-sentiment-analysis/data/dev_new.csv')
