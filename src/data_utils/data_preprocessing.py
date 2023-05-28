@@ -11,18 +11,18 @@ sign=[',', '.', '!', '?', ';', ':', '(', ')', '[', ']', '{', '}', '<', '>', '"',
 
 
 def xoa_trung_lap(s):
-  loop = ""
-  i=1
-  while i <= len(s)-1:
-    if s[i]==s[i-1] and (i==len(s)-1 or s[i+1]==' '):
-      j=i
-      loop=s[i]
-      while s[j-1] == s[j]:
-        loop+=s[j]
-        j-=1
-      s = s.replace(loop, s[i])
-    i+=1
-  return s
+    loop = ""
+    i=1
+    while i <= len(s)-1:
+      if s[i]==s[i-1] and (i==len(s)-1 or s[i+1]==' '):
+        j=i
+        loop=s[i]
+        while s[j-1] == s[j]:
+          loop+=s[j]
+          j-=1
+        s = s.replace(loop, s[i])
+      i+=1
+    return s
      
 def scanerr(sentence):
     for t in sign:

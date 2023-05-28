@@ -5,7 +5,6 @@ from PIL import Image
 import torch
 from data_utils.data_preprocessing import scanerr
 
-@dataclass
 class data_Collator:
     def __init__(self, config: Dict):
         self.config = config
@@ -21,3 +20,6 @@ class data_Collator:
 def createDataCollator(config: Dict) -> data_Collator:
     collator = data_Collator(config)
     return collator
+
+
+
