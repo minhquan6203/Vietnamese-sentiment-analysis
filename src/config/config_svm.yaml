@@ -60,5 +60,5 @@ metrics:
 
 inference:
   checkpoint: checkpoint-756
-  test_dataset: /content/vietnamese-sentiment-analysis
+  test_dataset: /content/vietnamese-sentiment-analysis/data/test.csv
   batch_size: 512
