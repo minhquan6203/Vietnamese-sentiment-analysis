@@ -3,6 +3,7 @@ from dataclasses import dataclass
 from typing import Dict, List
 from PIL import Image
 import torch
+from data_utils.data_preprocessing import scanerr
 
 @dataclass
 class data_Collator:
@@ -10,7 +11,7 @@ class data_Collator:
         self.config = config
     def __call__(self, raw_batch_dict):
         return {
-           'text':[ann["sentence"] for ann in raw_batch_dict],
+           'text':[scanerr(ann["sentence"]) for ann in raw_batch_dict],
             'labels': torch.tensor([ann["label"] for ann in raw_batch_dict],
                 dtype=torch.int64
             ),
