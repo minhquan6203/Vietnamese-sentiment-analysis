@@ -27,7 +27,7 @@ text_embedding:
 
 model:
   type_model: svm
-  name: sentiment_analysis  # Custom name for the multimodal model
+  name: sentiment_analysis  # Custom name for the model
   intermediate_dims: 128
   dropout: 0.2
 
@@ -60,5 +60,5 @@ metrics:
 
 inference:
   checkpoint: checkpoint-756
-  test_dataset: /content/data/test.csv
+  test_dataset: /content/vietnamese-sentiment-analysis
   batch_size: 512

@@ -36,7 +36,7 @@ encoder:
 
 model:
   type_model: trans
-  name: sentiment_analysis  # Custom name for the multimodal model
+  name: sentiment_analysis  # Custom name for the model
   intermediate_dims: 128
   dropout: 0.2
 
@@ -47,7 +47,7 @@ train:
   output_dir: checkpoint
   seed: 12345
   num_train_epochs: 100
-  learning_rate: 3.0e-5
+  learning_rate: 5.0e-5
   weight_decay: 0.0
   warmup_ratio: 0.0
   warmup_steps: 0

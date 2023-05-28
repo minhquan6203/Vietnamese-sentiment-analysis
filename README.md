@@ -1,0 +1,15 @@
+Phân tích cảm xúc tiếng Việt là một lĩnh vực nghiên cứu trong lĩnh vực Trí tuệ nhân tạo và xử lý ngôn ngữ tự nhiên. Nó tập trung vào việc xác định và hiểu cảm xúc và thái độ của con người được thể hiện trong văn bản tiếng Việt.Với sự phát triển mạnh mẽ của mạng xã hội và các nền tảng trực tuyến, phân tích cảm xúc tiếng Việt ngày càng trở nên quan trọng hơn. Công nghệ này giúp tổng hợp ý kiến từ các nguồn dữ liệu lớn như bình luận trên mạng xã hội, đánh giá sản phẩm, bài viết trên blog và nhiều nguồn thông tin khác.
+
+Phân tích cảm xúc tiếng Việt yêu cầu sự kết hợp giữa các phương pháp xử lý ngôn ngữ tự nhiên và các thuật toán học máy. Đầu tiên, văn bản tiếng Việt được tiền xử lý để loại bỏ các dấu câu, từ ngữ không cần thiết và chuyển đổi văn bản thành các đại diện số hóa. Sau đó, các thuật toán học máy được áp dụng để phân loại văn bản thành các nhãn cảm xúc khác nhau như tích cực, tiêu cực hoặc trung tính.
+
+Ứng dụng của phân tích cảm xúc tiếng Việt rất đa dạng và có ảnh hưởng đến nhiều lĩnh vực. Ví dụ, các doanh nghiệp có thể sử dụng phân tích cảm xúc tiếng Việt để đo lường sự hài lòng của khách hàng đối với sản phẩm hoặc dịch vụ của họ. Các chính phủ và tổ chức xã hội có thể sử dụng nó để theo dõi ý kiến công chúng về các chính sách hay sự kiện xã hội. Ngoài ra, phân tích cảm xúc tiếng Việt cũng có thể được áp dụng trong lĩnh vực quảng cáo, dự báo thị trường và nhiều lĩnh vực khác.
+
+Tuy nhiên, phân tích cảm xúc tiếng Việt cũng đặt ra một số thách thức. Đối với ngôn ngữ tự nhiên phức tạp như tiếng Việt, có những yếu tố đặc biệt cần được xem xét. Ví dụ, tiếng Việt có nhiều từ ngữ mang tính biểu cảm cao và sử dụng nhiều từ chỉ cảm xúc phụ thuộc vào ngữ cảnh. Điều này đòi hỏi các hệ thống phân tích cảm xúc tiếng Việt phải hiểu được sự tương quan giữa từ ngữ và ngữ cảnh để đưa ra đánh giá chính xác về cảm xúc.
+
+Một thách thức khác là sự đa dạng của tiếng Việt. Dialects, biến thể ngôn ngữ và sự khác biệt về ngữ pháp và từ ngữ trong các vùng địa lý khác nhau có thể ảnh hưởng đến khả năng phân tích cảm xúc chính xác. Điều này đòi hỏi việc xây dựng tập dữ liệu huấn luyện phong phú và đa dạng để đảm bảo độ chính xác và khả năng tổng quát hóa của các hệ thống phân tích cảm xúc tiếng Việt.
+
+Một khía cạnh quan trọng khác của phân tích cảm xúc tiếng Việt là việc xử lý cảm xúc phản đối, phân biệt giữa sự đồng tình và sự phản đối trong văn bản. Điều này đòi hỏi hệ thống phân tích cảm xúc tiếng Việt phải có khả năng phân loại một cách chính xác những biểu đạt tiêu cực và tích cực, đồng thời phân biệt được sự khác biệt giữa ý kiến cá nhân và ý kiến chung.
+
+Mặc dù đối mặt với những thách thức này, phân tích cảm xúc tiếng Việt đang ngày càng được phát triển và áp dụng rộng rãi. Các nhà nghiên cứu và các công ty công nghệ đang đưa ra nhiều giải pháp sáng tạo để cải thiện độ chính xác và hiệu suất của các hệ thống phân tích cảm xúc tiếng Việt
+
+Repo này tập trung vào transformers để giải quyết bài toán trên bộ dữ liệu UIT-VSFC (version 1.0) - Vietnamese Students’ Feedback Corpus (https://nlp.uit.edu.vn/datasets#h.p_4Brw8L-cbfTe) 
