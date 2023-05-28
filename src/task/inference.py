@@ -10,9 +10,11 @@ import transformers
 from utils.builder import get_model
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
 class Predict:
-    def __init__(self,config: Dict):
+    def __init__(self,config: Dict,answer_space):
         self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
-        self.answer_space=[0,1,2]
+        #self.answer_space=[0,1,2]
+        #self.answer_space=['Sadness' 'Surprise' 'Disgust' 'Fear' 'Anger' 'Other' 'Enjoyment']
+        self.answer_space =answer_space
         self.model_name =config["model"]["name"]
         self.checkpoint_path=os.path.join(config["train"]["output_dir"], config["model"]["name"], config["inference"]["checkpoint"], "pytorch_model.bin")
         self.test_path=config['inference']['test_dataset']

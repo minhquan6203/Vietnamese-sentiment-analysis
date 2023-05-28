@@ -14,23 +14,19 @@ from eval_metric.evaluate import ScoreCalculator
 from task.inference import Predict
 from utils.builder import build_model
 
-def training(config,device):
-    data = loadDataset(config)
-    logging.info("Loaded processed DSAAA Dataset")
-    
-    multimodal_collator = createDataCollator(config)
+def training(config,device,data): 
+    collator = createDataCollator(config)
     logging.info("Created data collator")
     
-    multimodal_model = build_model(config, data["answer_space"]).to(device)
+    model = build_model(config, data["answer_space"]).to(device)
     logging.info("Initialized model for training")
     
     calculator = ScoreCalculator(data["answer_space"])
-
     
     logging.info("Training started...")
     training_metrics, eval_metrics = train_model(
         config, device, data["dataset"], 
-        multimodal_collator, multimodal_model,
+        collator, model,
         calculator.compute_metrics
     )
     
@@ -49,9 +45,9 @@ def training(config,device):
     logging.info("Metrics saved")
  
 
-def predicting(config):
+def predicting(config,answer_space):
     logging.info("predicting...")
-    predict=Predict(config)
+    predict=Predict(config,answer_space)
     predict.predict_submission()
     logging.info("task done!!!")
 
@@ -67,11 +63,12 @@ def main(config_path: Text) -> None:
         os.environ['CUDA_VISIBLE_DEVICES'] = '0' # SET ONLY 1 GPU DEVICE
     else:
         device =  torch.device('cpu')
+    data = loadDataset(config)
+    logging.info("Loaded processed DSAAA Dataset")
     
-    training(config,device) #predict thì cmt lại, vào sửa config tới best model
+    training(config,device,data) #predict thì cmt lại, vào sửa config tới best model
 
-    predicting(config)
-
+    predicting(config,data["answer_space"])
 
 
 if __name__ == '__main__':

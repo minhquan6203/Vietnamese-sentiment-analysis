@@ -1,6 +1,7 @@
 import os
 from typing import Dict
 from datasets import load_dataset
+import numpy as np
 
 def loadDataset(config: Dict) -> Dict:
     dataset = load_dataset(
@@ -12,7 +13,9 @@ def loadDataset(config: Dict) -> Dict:
         }
     )
 
-    answer_space = [0, 1, 2]
+    #answer_space = [0, 1, 2]
+    #answer_space =['Sadness' 'Surprise' 'Disgust' 'Fear' 'Anger' 'Other' 'Enjoyment']
+    answer_space = list(np.unique(dataset['train']['sentiment']))
     dataset = dataset.map(
         lambda examples: {'label': [answer_space.index(ans) for ans in examples['sentiment']]},
         batched=True
