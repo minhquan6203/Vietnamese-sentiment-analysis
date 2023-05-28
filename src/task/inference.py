@@ -16,7 +16,8 @@ class Predict:
         #self.answer_space=['Sadness' 'Surprise' 'Disgust' 'Fear' 'Anger' 'Other' 'Enjoyment']
         self.answer_space =answer_space
         self.model_name =config["model"]["name"]
-        self.checkpoint_path=os.path.join(config["train"]["output_dir"], config["model"]["name"], config["inference"]["checkpoint"], "pytorch_model.bin")
+        self.checkpoint_path=os.path.join(config["train"]["output_dir"], config["model"]["name"])
+        self.checkpoint_model=os.path.join(self.checkpoint_path,min(os.listdir(self.checkpoint_path), key=lambda x: int(x.split('-')[1])),"pytorch_model.bin")
         self.test_path=config['inference']['test_dataset']
         self.bath_size=config['inference']['batch_size']
         self.model = get_model(config,len(self.answer_space))
@@ -24,11 +25,11 @@ class Predict:
         transformers.logging.set_verbosity_error()
         logging.basicConfig(level=logging.INFO)
     
-        
+
     # Load the model
         logging.info("Loading the {0} model...".format(self.model_name))
-        
-        self.model.load_state_dict(torch.load(self.checkpoint_path))
+        logging.info("best checkpoint at path: {0}".format(self.checkpoint_model))
+        self.model.load_state_dict(torch.load(self.checkpoint_model))
         self.model.to(self.device)
 
         # Obtain the prediction from the model
@@ -43,7 +44,7 @@ class Predict:
                 preds = output["logits"].argmax(axis=-1).cpu().numpy()
                 answers = [self.answer_space[i] for i in preds]
                 y_preds.extend(answers)
-                gts.extend(item['label'].cpu().numpy())
+                gts.extend(item['label'])
         print('accuracy on test:', accuracy_score(gts,y_preds))
         print('f1 macro on test:', f1_score(gts,y_preds,average='macro'))
         print('confusion matrix:\n',confusion_matrix(gts,y_preds))
