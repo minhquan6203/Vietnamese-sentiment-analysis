@@ -1,6 +1,7 @@
 
 import py_vncorenlp
-
+import pandas as pd
+import os
 py_vncorenlp.download_model(save_dir='/content')
 rdrsegmenter = py_vncorenlp.VnCoreNLP(annotators=["wseg"], save_dir='/content')
 
@@ -9,6 +10,7 @@ sign=[',', '.', '!', '?', ';', ':', '(', ')', '[', ']', '{', '}', '<', '>', '"',
       '|', '~', '``', "''", '“', '”', '‘', '’', '«', '»', '„', '‟', '‹', '›', '〝', '〞', 
       '‒', '–', '—', '―',    '•', '·', '⋅', '°',':3','<3',':>',':v',':)','=)',':(','-.-','-_-']
 
+word_seg=True
 
 def xoa_trung_lap(s):
     loop = ""
@@ -23,8 +25,8 @@ def xoa_trung_lap(s):
         s = s.replace(loop, s[i])
       i+=1
     return s
-     
-def scanerr(sentence):
+  
+def scanerr(sentence,word_seg=False):
     for t in sign:
         sentence=sentence.lower().replace(t,'')
     sentence=xoa_trung_lap(sentence)
@@ -36,8 +38,28 @@ def scanerr(sentence):
         or 'using'  in sentence or 'pizza'  in sentence or 'bitis'  in sentence or 'bắt được em'  in sentence 
         or 'mi đắng'  in sentence or 'tiếng pháo hoa'  in sentence or "tới bên em" in sentence):
             sentence = 'bình thường'
+    if word_seg:
+        return rdrsegmenter.word_segment(sentence)
+    else:
+        return sentence
 
-    return rdrsegmenter.word_segment(sentence)
+def main():
+  train=pd.read_csv('/content/vietnamese-sentiment-analysis/data/train.csv')
+  dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/dev.csv')
+  test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/test.csv')
+  word_seg=False
 
+  for i in range(len(train)):
+        train['sentence'][i]=scanerr(train['sentence'][i],word_seg)[0]
+  for i in range(len(dev)):
+    dev['sentence'][i]=scanerr(dev['sentence'][i],word_seg)[0]
+  for i in range(len(test)):
+    test['sentence'][i]=scanerr(test['sentence'][i],word_seg)[0]
 
+  train.to_csv('/content/vietnamese-sentiment-analysis/data/train_new.csv')
+  dev.to_csv('/content/vietnamese-sentiment-analysis/data/dev_new.csv')
+  test.to_csv('/content/vietnamese-sentiment-analysis/data/test_new.csv')
 
+if __name__ == '__main__':
+    main()
+    
