@@ -44,9 +44,9 @@ def scanerr(sentence,word_seg=False):
         return sentence
 
 def main():
-  train=pd.read_csv('/content/vietnamese-sentiment-analysis/data/train.csv')
-  dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/dev.csv')
-  test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/test.csv')
+  train=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSFC/train.csv')
+  dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSFC/dev.csv')
+  test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSFC/test.csv')
   word_seg=False
   for i in range(len(train)):
     train['sentence'][i]=scanerr(train['sentence'][i],word_seg)
@@ -55,10 +55,9 @@ def main():
   for i in range(len(test)):
     test['sentence'][i]=scanerr(test['sentence'][i],word_seg)
         
-
-  train.to_csv('/content/vietnamese-sentiment-analysis/data/train_new.csv')
-  dev.to_csv('/content/vietnamese-sentiment-analysis/data/dev_new.csv')
-  test.to_csv('/content/vietnamese-sentiment-analysis/data/test_new.csv')
+  train.to_csv('/content/vietnamese-sentiment-analysis/data/train.csv')
+  dev.to_csv('/content/vietnamese-sentiment-analysis/data/dev.csv')
+  test.to_csv('/content/vietnamese-sentiment-analysis/data/test.csv')
 
 if __name__ == '__main__':
     main()
