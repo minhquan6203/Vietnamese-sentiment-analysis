@@ -12,7 +12,7 @@ class Roberta_Model(nn.Module):
         self.text_embedding = Text_Embedding(config)
         self.pretrained = config["model"]["pretrained"]
         roberta_config = RobertaConfig.from_pretrained(self.pretrained)
-        roberta_config.hidden_size = config["attention"]["d_model"]  # Đặt kích thước tầng ẩn là 128
+        roberta_config.hidden_size = config["attention"]["d_model"]  # Đặt kích thước tầng ẩn
         roberta_config.num_labels = num_labels  # Đặt số lượng lớp
         roberta_config.num_hidden_layers = config["attention"]["layers"]
         roberta_config.num_attention_heads = config["attention"]["heads"]
