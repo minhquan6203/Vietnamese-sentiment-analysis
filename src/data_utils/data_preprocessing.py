@@ -16,14 +16,17 @@ def xoa_trung_lap(s):
     loop = ""
     i=1
     while i <= len(s)-1:
-      if s[i]==s[i-1] and (i==len(s)-1 or s[i+1]==' '):
-        j=i
-        loop=s[i]
-        while s[j-1] == s[j]:
-          loop+=s[j]
-          j-=1
-        s = s.replace(loop, s[i])
-      i+=1
+      try:
+        if s[i]==s[i-1] and (i==len(s)-1 or s[i+1]==' '):
+          j=i
+          loop=s[i]
+          while s[j-1] == s[j]:
+            loop+=s[j]
+            j-=1
+          s = s.replace(loop, s[i])
+        i+=1
+      except:
+        s='đéo biết nói gì nữa'
     return s
   
 def scanerr(sentence,word_seg=False):
@@ -44,10 +47,13 @@ def scanerr(sentence,word_seg=False):
         return sentence
 
 def main():
-  train=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSFC/train.csv')
-  dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSFC/dev.csv')
-  test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSFC/test.csv')
-  word_seg=False
+  train=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/train_nor_811.csv')
+  dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/valid_nor_811.csv')
+  test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/test_nor_811.csv')
+  train=train.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
+  dev=dev.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
+  test=test.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
+  word_seg=True
   for i in range(len(train)):
     train['sentence'][i]=scanerr(train['sentence'][i],word_seg)
   for i in range(len(dev)):

@@ -16,14 +16,14 @@ tokenizer:
 
 text_embedding:
   text_encoder: vinai/phobert-base
+  frezze: True
   d_features: 768
-  d_model: 128
+  d_model: 512
   dropout: 0.2
-
 
 attention:
   heads: 16
-  d_model: 128
+  d_model: 512
   d_key: 64
   d_value: 64
   d_ff: 1024
@@ -32,13 +32,13 @@ attention:
   use_aoa: False
 
 encoder:
-  d_model: 128
+  d_model: 512
   layers: 4
 
 model:
   type_model: trans
   name: sentiment_analysis  # Custom name for the model
-  intermediate_dims: 128
+  intermediate_dims: 512
   dropout: 0.2
 
 early_stoping:

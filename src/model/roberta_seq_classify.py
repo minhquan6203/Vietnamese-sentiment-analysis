@@ -18,7 +18,7 @@ class Roberta_Model(nn.Module):
         roberta_config.num_attention_heads = config["attention"]["heads"]
         roberta_config.hidden_dropout_prob = config["attention"]["dropout"]
 
-        self.classifier = RobertaForSequenceClassification.from_pretrained(self.pretrained, config=roberta_config)
+        self.classifier = RobertaForSequenceClassification.from_pretrained(self.pretrained,ignore_mismatched_sizes=True,config=roberta_config)
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
         embbed, mask = self.text_embedding(text)

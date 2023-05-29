@@ -21,10 +21,6 @@ class Trans_SVM_Model(nn.Module):
         self.r=config['svm']['r']
 
         self.text_embbeding = Text_Embedding(config)
-        self.process = nn.Sequential(
-            nn.ReLU(),
-            nn.Dropout(self.dropout),
-        )
         self.encoder = UniModalEncoder(config)
         self.classifier = get_kernel(self.kernel_type,self.intermediate_dims, self.num_labels, self.gamma, self.r, self.degree)
         self.attention_weights = nn.Linear(self.intermediate_dims, 1)
@@ -39,9 +35,8 @@ class Trans_SVM_Model(nn.Module):
         attention_weights = torch.softmax(feature_attended, dim=1)
         feature_attended = torch.sum(attention_weights * encoded_feature, dim=1)
         
-        output = self.process(feature_attended)
         # output = output.view(output.size(0),output.size(1)*output.size(2))
-        logits = self.classifier(output)
+        logits = self.classifier(feature_attended)
         logits = F.log_softmax(logits, dim=-1)
         out = {
             "logits": logits

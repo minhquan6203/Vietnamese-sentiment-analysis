@@ -29,8 +29,7 @@ class Trans_Model(nn.Module):
         attention_weights = torch.softmax(feature_attended, dim=1)
         feature_attended = torch.sum(attention_weights * encoded_feature, dim=1)
         
-        output = self.process(feature_attended)
-        logits = self.classifier(output)
+        logits = self.classifier(feature_attended)
         logits = F.log_softmax(logits, dim=-1)
         out = {
             "logits": logits

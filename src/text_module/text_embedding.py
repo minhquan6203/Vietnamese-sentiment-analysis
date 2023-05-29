@@ -11,9 +11,11 @@ class Text_Embedding(nn.Module):
         super(Text_Embedding,self).__init__()
         self.tokenizer = AutoTokenizer.from_pretrained(config["text_embedding"]["text_encoder"])
         self.embedding = AutoModel.from_pretrained(config["text_embedding"]["text_encoder"])
+        self.frezze = config['text_embedding']['frezee']
         # freeze all parameters of pretrained model
-        for param in self.embedding.parameters():
-            param.requires_grad = False
+        if self.frezze:
+            for param in self.embedding.parameters():
+                param.requires_grad = False
 
         self.proj = nn.Linear(config["text_embedding"]['d_features'], config["text_embedding"]['d_model'])
         self.gelu = nn.GELU()
