@@ -30,7 +30,6 @@ text_embedding:
 model:
   type_model: roberta
   name: sentiment_analysis  # Custom name for the model
-  pretrained: wonrax/phobert-base-vietnamese-sentiment
   intermediate_dims: 512
   dropout: 0.2
 
