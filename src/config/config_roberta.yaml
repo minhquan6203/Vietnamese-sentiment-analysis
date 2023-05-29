@@ -7,22 +7,11 @@ data:
   val_dataset: dev.csv
   test_set: test.csv
 
-svm:
-  gamma: 0.1
-  degree: 2
-  r: 1
-  kernel_type: custom
-
 attention:
   heads: 16
   layers: 4
   d_model: 128
-  d_key: 64
-  d_value: 64
-  d_ff: 1024
-  d_feature: 1024
   dropout: 0.2
-  use_aoa: False
 
 tokenizer:
   padding: max_length
@@ -40,7 +29,7 @@ text_embedding:
 model:
   type_model: roberta
   name: sentiment_analysis  # Custom name for the model
-  prtrained: wonrax/phobert-base-vietnamese-sentiment
+  pretrained: wonrax/phobert-base-vietnamese-sentiment
   intermediate_dims: 128
   dropout: 0.2
 
@@ -51,7 +40,7 @@ train:
   output_dir: checkpoint
   seed: 12345
   num_train_epochs: 100
-  learning_rate: 0.01
+  learning_rate: 5.0e-5
   weight_decay: 0.0
   warmup_ratio: 0.0
   warmup_steps: 0

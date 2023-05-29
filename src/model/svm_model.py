@@ -20,10 +20,6 @@ class SVM_Model(nn.Module):
         self.r=config['svm']['r']
 
         self.text_embbeding = Text_Embedding(config)
-        self.process = nn.Sequential(
-            nn.ReLU(),
-            nn.Dropout(self.dropout),
-        )
         self.max_length = config["tokenizer"]["max_length"]
         self.classifier = get_kernel(self.kernel_type, self.max_length*self.intermediate_dims,
                                      self.num_labels, 
@@ -33,8 +29,7 @@ class SVM_Model(nn.Module):
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
         embbed, mask = self.text_embbeding(text)
-        output = self.process(embbed)
-        output = output.view(output.size(0),output.size(1)*output.size(2))
+        output = embbed.view(embbed.size(0),embbed.size(1)*embbed.size(2))
         logits = self.classifier(output)
         logits = F.log_softmax(logits, dim=-1)
         out = {

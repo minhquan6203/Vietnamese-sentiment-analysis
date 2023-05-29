@@ -15,10 +15,6 @@ class Trans_Model(nn.Module):
         self.dropout=config["model"]["dropout"]
         self.d_text = config["text_embedding"]['d_features']
         self.text_embbeding = Text_Embedding(config)
-        self.process = nn.Sequential(
-            nn.ReLU(),
-            nn.Dropout(self.dropout),
-        )
         self.encoder = UniModalEncoder(config)
         self.classifier = nn.Linear(self.intermediate_dims, self.num_labels)
         self.attention_weights = nn.Linear(self.intermediate_dims, 1)
