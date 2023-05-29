@@ -11,9 +11,9 @@ class Text_Embedding(nn.Module):
         super(Text_Embedding,self).__init__()
         self.tokenizer = AutoTokenizer.from_pretrained(config["text_embedding"]["text_encoder"])
         self.embedding = AutoModel.from_pretrained(config["text_embedding"]["text_encoder"])
-        self.frezze = config['text_embedding']['frezee']
+        self.freeze = config['text_embedding']['freeze']
         # freeze all parameters of pretrained model
-        if self.frezze:
+        if self.freeze:
             for param in self.embedding.parameters():
                 param.requires_grad = False
 
