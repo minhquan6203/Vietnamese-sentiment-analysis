@@ -18,14 +18,14 @@ class TextCNN_Model(nn.Module):
 
         self.text_embbeding = Text_Embedding(config)
         self.max_length = config["tokenizer"]["max_length"]
-        self.classifier = Text_CNN(self.max_length*self.intermediate_dims,self.num_labels)
+        self.classifier = Text_CNN(self.intermediate_dims,self.num_labels)
         self.attention_weights = nn.Linear(self.intermediate_dims, 1)
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
         embbed, mask = self.text_embbeding(text)
-        output = embbed.view(embbed.size(0),embbed.size(1)*embbed.size(2))
-        logits = self.classifier(output)
+        # output = embbed.view(embbed.size(0),embbed.size(1)*embbed.size(2))
+        logits = self.classifier(embbed)
         logits = F.log_softmax(logits, dim=-1)
         out = {
             "logits": logits
