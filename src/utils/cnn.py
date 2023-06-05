@@ -42,3 +42,40 @@ class Text_CNN(nn.Module):
         out = out.squeeze(2) 
         out = self.dropout(self.fc1(out))      
         return out
+    
+
+
+# import torch
+# import torch.nn as nn
+
+# class Text_CNN(nn.Module):
+#     def __init__(self, d_model, num_classes):
+#         super(Text_CNN, self).__init__()
+#         self.conv1 = nn.Conv1d(d_model, 256, kernel_size=3, padding=1)
+#         self.bn1 = nn.BatchNorm1d(256)
+#         self.conv2 = nn.Conv1d(256, 512, kernel_size=3, padding=1)
+#         self.bn2 = nn.BatchNorm1d(512)
+#         self.conv3 = nn.Conv1d(512, 1024, kernel_size=3, padding=1)
+#         self.bn3 = nn.BatchNorm1d(1024)
+#         self.conv4 = nn.Conv1d(1024, 1024, kernel_size=3, padding=1)
+#         self.bn4 = nn.BatchNorm1d(1024)
+#         self.fc1 = nn.Linear(1024, 512)
+#         self.dropout = nn.Dropout(0.2)
+#         self.fc2 = nn.Linear(512, num_classes)
+#         self.relu = nn.ReLU()
+
+#     def forward(self, x):
+#         x = x.permute(0, 2, 1)
+    
+        
+#         x = self.dropout(self.relu(self.bn1(self.conv1(x))))
+#         x = self.dropout(self.relu(self.bn2(self.conv2(x))))
+#         x = self.dropout(self.relu(self.bn3(self.conv3(x))))
+#         x = self.dropout(self.relu(self.bn4(self.conv4(x))))
+#         x = torch.mean(x, dim=2)
+#         x = self.dropout(x)
+#         x = self.relu(self.fc1(x))
+#         x = self.dropout(x)
+#         x = self.fc2(x)
+        
+#         return x
