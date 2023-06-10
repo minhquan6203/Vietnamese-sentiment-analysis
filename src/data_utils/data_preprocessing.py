@@ -47,9 +47,9 @@ def scanerr(sentence,word_seg=False):
         return sentence
 
 def main():
-  train=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/train_nor_811.csv')
-  dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/valid_nor_811.csv')
-  test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/test_nor_811.csv')
+  train=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/train.csv')
+  dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/dev.csv')
+  test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/test.csv')
   train=train.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
   dev=dev.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
   test=test.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})

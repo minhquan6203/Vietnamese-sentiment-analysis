@@ -4,6 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from text_module.text_embedding import Text_Embedding
 from utils.cnn import Text_CNN
+from utils.builder import build_text_embbeding
 
 class TextCNN_Model(nn.Module):
     def __init__(self,config: Dict, num_labels: int):
@@ -14,17 +15,19 @@ class TextCNN_Model(nn.Module):
         self.dropout=config["model"]["dropout"]
         self.d_text = config["text_embedding"]['d_features']
         self.max_length = config['tokenizer']['max_length']
-
-
-        self.text_embbeding = Text_Embedding(config)
+        self.embed_type=config['text_embedding']['type']
+        self.text_embbeding = build_text_embbeding(config)
         self.max_length = config["tokenizer"]["max_length"]
         self.classifier = Text_CNN(self.intermediate_dims,self.num_labels)
         self.attention_weights = nn.Linear(self.intermediate_dims, 1)
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
-        embbed, mask = self.text_embbeding(text)
-        # output = embbed.view(embbed.size(0),embbed.size(1)*embbed.size(2))
+        if self.embed_type not in ['count_vector','tf_idf']:
+            embbed, mask = self.text_embbeding(text)
+        else:
+            embbed=self.text_embbeding(text)
+            mask=None
         logits = self.classifier(embbed)
         logits = F.log_softmax(logits, dim=-1)
         out = {

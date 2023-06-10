@@ -2,7 +2,7 @@ from typing import List, Dict, Optional
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from text_module.text_embedding import Text_Embedding
+from utils.builder import build_text_embbeding
 from utils.svm_kernel import get_kernel
 
 class SVM_Model(nn.Module):
@@ -19,7 +19,8 @@ class SVM_Model(nn.Module):
         self.degree = config['svm']['degree']
         self.r=config['svm']['r']
 
-        self.text_embbeding = Text_Embedding(config)
+        self.text_embbeding = build_text_embbeding(config)
+        self.embed_type=config['text_embedding']['type']
         self.max_length = config["tokenizer"]["max_length"]
         self.classifier = get_kernel(self.kernel_type, self.max_length*self.intermediate_dims,
                                      self.num_labels, 
@@ -28,7 +29,11 @@ class SVM_Model(nn.Module):
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
-        embbed, mask = self.text_embbeding(text)
+        if self.embed_type not in ['count_vector','tf_idf']:
+            embbed, mask = self.text_embbeding(text)
+        else:
+            embbed=self.text_embbeding(text)
+            mask=None
         output = embbed.view(embbed.size(0),embbed.size(1)*embbed.size(2))
         logits = self.classifier(output)
         logits = F.log_softmax(logits, dim=-1)

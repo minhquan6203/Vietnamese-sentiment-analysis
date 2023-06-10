@@ -2,7 +2,7 @@ from typing import List, Dict, Optional
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from text_module.text_embedding import Text_Embedding
+from utils.builder import build_text_embbeding
 from encoder_module.uni_modal_encoder import UniModalEncoder
 from utils.svm_kernel import get_kernel
 
@@ -20,7 +20,7 @@ class Trans_SVM_Model(nn.Module):
         self.degree = config['svm']['degree']
         self.r=config['svm']['r']
 
-        self.text_embbeding = Text_Embedding(config)
+        self.text_embbeding = build_text_embbeding(config)
         self.encoder = UniModalEncoder(config)
         self.classifier = get_kernel(self.kernel_type,self.intermediate_dims, self.num_labels, self.gamma, self.r, self.degree)
         self.attention_weights = nn.Linear(self.intermediate_dims, 1)

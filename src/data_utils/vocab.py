@@ -19,13 +19,20 @@ def create_vocab(config: Dict):
     word_counts = {}
 
     for data_file in dataset.values():
-        for item in data_file['sentence']:
-            for word in item.split():
-                if word not in word_counts:
-                    word_counts[word] = 1
-                else:
-                    word_counts[word] += 1
+        try:
+            for item in data_file['sentence']:
+                for word in item.split():
+                    if word not in word_counts:
+                        word_counts[word] = 1
+                    else:
+                        word_counts[word] += 1
+        except:
+            pass
 
     sorted_word_counts = dict(sorted(word_counts.items(), key=lambda x: x[1], reverse=True))
     vocab = list(sorted_word_counts.keys())
+
+    # Thêm từ "unknown" vào vocab
+    vocab.append("unknown")
+
     return vocab, sorted_word_counts

@@ -2,14 +2,14 @@ from typing import List, Dict, Optional
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from text_module.text_embedding import Text_Embedding
+from utils.builder import build_text_embbeding
 from transformers import RobertaForSequenceClassification, RobertaConfig
 
 class Roberta_Model(nn.Module):
     def __init__(self, config: Dict, num_labels: int):
      
         super(Roberta_Model, self).__init__()
-        self.text_embedding = Text_Embedding(config)
+        self.text_embedding = build_text_embbeding(config)
         roberta_config = RobertaConfig.from_pretrained(config["text_embedding"]["text_encoder"])
         roberta_config.hidden_size = config["attention"]["d_model"]  # Đặt kích thước tầng ẩn
         roberta_config.num_labels = num_labels  # Đặt số lượng lớp
@@ -19,10 +19,15 @@ class Roberta_Model(nn.Module):
         roberta_config.output_hidden_states=True
 
         self.classifier = RobertaForSequenceClassification(config=roberta_config)
+        self.embed_type=config['text_embedding']['type']
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
-        embbed, mask = self.text_embedding(text)
-        mask = mask.squeeze(1).squeeze(1) 
+        if self.embed_type not in ['count_vector','tf_idf']:
+            embbed, mask = self.text_embbeding(text)
+            mask = mask.squeeze(1).squeeze(1) 
+        else:
+            embbed=self.text_embbeding(text)
+            mask=None
         output = self.classifier(inputs_embeds=embbed, attention_mask=mask, labels=labels)
     
         out = {
