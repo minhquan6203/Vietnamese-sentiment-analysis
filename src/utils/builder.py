@@ -5,7 +5,7 @@ from model.roberta_seq_classify import createRoberta_Model,Roberta_Model
 from model.bert_cnn import createTextCNN_Model,TextCNN_Model
 from text_module.text_embedding import Text_Embedding
 from text_module.count_vectorizer import CountVectorizer
-from text_module.if_idf import IDFVectorizer
+from text_module.tf_idf import IDFVectorizer
 from data_utils.vocab import create_vocab
 
 def build_model(config, answer_space):
