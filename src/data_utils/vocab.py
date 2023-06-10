@@ -3,7 +3,7 @@ from datasets import load_dataset
 import os
 
 def create_vocab(config: Dict):
-    data_folder=config['data']['data_folder']
+    data_folder=config['data']['dataset_folder']
     train_set=config["data"]["train_dataset"]
     val_set=config["data"]["val_dataset"]
     test_set=config["data"]["test_dataset"]
