@@ -15,6 +15,7 @@ class CountVectorizer(nn.Module):
             word_counts = torch.zeros(len(self.vocab))
             
             for word in sentence.split():
+                word=word.lower()
                 if word in self.vocab:
                     word_idx = self.word_to_idx[word]
                     word_counts[word_idx] += 1

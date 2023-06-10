@@ -49,7 +49,7 @@ train:
   logging_strategy: epoch
   save_strategy: epoch
   save_total_limit: 2 
-  metric_for_best_model: "eval_f1"
+  metric_for_best_model: eval_f1
   per_device_train_batch_size: 256
   per_device_eval_batch_size: 256
   remove_unused_columns: False

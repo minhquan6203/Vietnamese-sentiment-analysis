@@ -19,6 +19,11 @@ class Trans_SVM_Model(nn.Module):
         self.kernel_type=config['svm']['kernel_type']
         self.degree = config['svm']['degree']
         self.r=config['svm']['r']
+        self.embed_type=config['text_embedding']['type']
+        if self.embed_type not in ['count_vector','tf_idf']:
+            self.max_length = config["tokenizer"]["max_length"]
+        else:
+            self.max_length = 1
 
         self.text_embbeding = build_text_embbeding(config)
         self.encoder = UniModalEncoder(config)
@@ -27,7 +32,11 @@ class Trans_SVM_Model(nn.Module):
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
-        embbed, mask = self.text_embbeding(text)
+        if self.embed_type not in ['count_vector','tf_idf']:
+            embbed, mask = self.text_embbeding(text)
+        else:
+            embbed=self.text_embbeding(text)
+            mask=None
         encoded_feature = self.encoder(embbed, mask)
         
         feature_attended = self.attention_weights(torch.tanh(encoded_feature))

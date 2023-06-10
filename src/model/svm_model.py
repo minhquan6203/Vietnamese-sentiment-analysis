@@ -13,7 +13,6 @@ class SVM_Model(nn.Module):
         self.intermediate_dims = config["model"]["intermediate_dims"]
         self.dropout=config["model"]["dropout"]
         self.d_text = config["text_embedding"]['d_features']
-        self.max_length = config['tokenizer']['max_length']
         self.gamma = config['svm']['gamma']
         self.kernel_type=config['svm']['kernel_type']
         self.degree = config['svm']['degree']
@@ -21,7 +20,10 @@ class SVM_Model(nn.Module):
 
         self.text_embbeding = build_text_embbeding(config)
         self.embed_type=config['text_embedding']['type']
-        self.max_length = config["tokenizer"]["max_length"]
+        if self.embed_type not in ['count_vector','tf_idf']:
+            self.max_length = config["tokenizer"]["max_length"]
+        else:
+            self.max_length = 1
         self.classifier = get_kernel(self.kernel_type, self.max_length*self.intermediate_dims,
                                      self.num_labels, 
                                      self.gamma, self.r, self.degree)
