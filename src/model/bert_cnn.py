@@ -4,7 +4,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from text_module.text_embedding import Text_Embedding
 from utils.cnn import Text_CNN
-from utils.builder import build_text_embbeding
+from text_module.init_text_embedding import build_text_embbeding
 
 class TextCNN_Model(nn.Module):
     def __init__(self,config: Dict, num_labels: int):
