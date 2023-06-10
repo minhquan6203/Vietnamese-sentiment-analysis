@@ -7,7 +7,7 @@ import pandas as pd
 from torch.utils.data import DataLoader
 import torch
 import transformers
-from utils.builder import get_model
+from model.init_model import get_model
 from sklearn.metrics import accuracy_score, f1_score, confusion_matrix
 class Predict:
     def __init__(self,config: Dict,answer_space):

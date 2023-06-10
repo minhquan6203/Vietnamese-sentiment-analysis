@@ -2,7 +2,7 @@ from typing import List, Dict, Optional
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from utils.builder import build_text_embbeding
+from text_module.init_text_embedding import build_text_embbeding
 from encoder_module.uni_modal_encoder import UniModalEncoder
 
 class Trans_Model(nn.Module):

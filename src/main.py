@@ -12,7 +12,7 @@ from data_utils.data_collator import createDataCollator
 from task.train import train_model
 from eval_metric.evaluate import ScoreCalculator
 from task.inference import Predict
-from utils.builder import build_model
+from model.init_model import build_model
 
 def training(config,device,data): 
     collator = createDataCollator(config)
