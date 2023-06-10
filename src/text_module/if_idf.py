@@ -29,5 +29,5 @@ class IDFVectorizer:
             
             idf_vector[word_index] = self.idf_vector[word_index]
         
-        return self.proj(idf_vector)
+        return self.proj(idf_vector.unsqueeze(0))
 
