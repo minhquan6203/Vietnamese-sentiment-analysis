@@ -50,9 +50,9 @@ def main():
   train=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/train.csv')
   dev=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/dev.csv')
   test=pd.read_csv('/content/vietnamese-sentiment-analysis/data/UIT-VSMEC/test.csv')
-  train=train.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
-  dev=dev.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
-  test=test.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
+  # train=train.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
+  # dev=dev.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
+  # test=test.rename(columns={'Emotion':'sentiment','Sentence':'sentence'})
   word_seg=True
   for i in range(len(train)):
     train['sentence'][i]=scanerr(train['sentence'][i],word_seg)
