@@ -23,10 +23,10 @@ class Roberta_Model(nn.Module):
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
         if self.embed_type not in ['count_vector','tf_idf']:
-            embbed, mask = self.text_embbeding(text)
+            embbed, mask = self.text_embedding(text)
             mask = mask.squeeze(1).squeeze(1) 
         else:
-            embbed=self.text_embbeding(text)
+            embbed=self.text_embedding(text)
             mask=None
         output = self.classifier(inputs_embeds=embbed, attention_mask=mask, labels=labels)
     
