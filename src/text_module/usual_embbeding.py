@@ -1,9 +1,9 @@
 import torch
 from torch import nn
 
-class CountVectorizer(nn.Module):
+class Usual_Embedding(nn.Module):
     def __init__(self, config, vocab):
-        super(CountVectorizer, self).__init__()
+        super(Usual_Embedding, self).__init__()
         self.vocab = vocab
         self.word_to_idx = {word: i for i, word in enumerate(vocab)}
         self.proj = nn.Linear(len(vocab), config["text_embedding"]["d_model"])
@@ -18,12 +18,12 @@ class CountVectorizer(nn.Module):
                 word=word.lower()
                 if word in self.vocab:
                     word_idx = self.word_to_idx[word]
-                    word_counts[word_idx] = 1
+                    word_counts[word_idx] += 1
                 else:
                     # Xử lý trường hợp từ không xuất hiện trong vocab
                     unknown_idx = self.word_to_idx.get("unknown", None)
                     if unknown_idx is not None:
-                        word_counts[unknown_idx] = 1
+                        word_counts[unknown_idx] += 1
             
             count_vectors.append(word_counts)
         
