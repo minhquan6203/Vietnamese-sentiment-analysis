@@ -5,7 +5,7 @@ data:
   dataset_folder: vietnamese-sentiment-analysis/data
   train_dataset: train.csv
   val_dataset: dev.csv
- test_dataset: test.csv
+  test_dataset: test.csv
 
 svm:
   gamma: 0.1
