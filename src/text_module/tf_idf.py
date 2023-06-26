@@ -19,14 +19,15 @@ class IDFVectorizer(nn.Module):
     
     def compute_tf_vector(self, input_text):
         tf_vector = torch.zeros(len(self.vocab))
-        total_words = len(set(input_text.split()))
+        total_words = len(input_text.split())
         
-        for word in set(input_text.split()):
+        for word in input_text.split():
             word=word.lower()
             if word in self.vocab:
                 tf_vector[self.vocab.index(word)] +=1
             else:
                 tf_vector[self.vocab.index("unknown")] +=1
+
         return tf_vector / total_words
     
     def forward(self, input_texts):
