@@ -24,7 +24,7 @@ class SVM_Model(nn.Module):
             self.max_length = config["tokenizer"]["max_length"]
         else:
             self.max_length = 1
-        self.classifier = get_kernel(self.kernel_type, self.max_length*self.intermediate_dims,
+        self.classifier = get_kernel(self.kernel_type, self.intermediate_dims,
                                      self.num_labels, 
                                      self.gamma, self.r, self.degree)
         self.attention_weights = nn.Linear(self.intermediate_dims, 1)
@@ -36,8 +36,11 @@ class SVM_Model(nn.Module):
         else:
             embbed=self.text_embbeding(text)
             mask=None
-        output = embbed.view(embbed.size(0),embbed.size(1)*embbed.size(2))
-        logits = self.classifier(output)
+
+        feature_attended = self.attention_weights(torch.tanh(embbed))
+        attention_weights = torch.softmax(feature_attended, dim=1)
+        feature_attended = torch.sum(attention_weights * embbed, dim=1)
+        logits = self.classifier(feature_attended)
         logits = F.log_softmax(logits, dim=-1)
         out = {
             "logits": logits
