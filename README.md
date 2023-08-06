@@ -2,5 +2,7 @@ Vietnamese sentiment analysis is an important and popular task in the field of n
 
 Dataset:
 UIT-VSFC (version 1.0) - Vietnamese Students’ Feedback Corpus (https://nlp.uit.edu.vn/datasets#h.p_4Brw8L-cbfTe) 
+
 UIT-VSMEC (version 1.0) - Vietnamese Social Media Emotion Corpus (https://nlp.uit.edu.vn/datasets#h.p_FxJKMfavctsJ)
+
 UIT-ViHSD – Vietnamese Hate Speech Detection Dataset
