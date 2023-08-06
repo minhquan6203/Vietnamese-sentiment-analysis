@@ -6,4 +6,4 @@ UIT-VSFC (version 1.0) - Vietnamese Students’ Feedback Corpus (https://nlp.uit
 
 UIT-VSMEC (version 1.0) - Vietnamese Social Media Emotion Corpus (https://nlp.uit.edu.vn/datasets#h.p_FxJKMfavctsJ)
 
-UIT-ViHSD – Vietnamese Hate Speech Detection Dataset
+UIT-ViHSD – Vietnamese Hate Speech Detection Dataset (https://nlp.uit.edu.vn/datasets#h.fs21gpd5w6p1)
