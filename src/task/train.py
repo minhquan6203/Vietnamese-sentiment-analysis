@@ -24,7 +24,7 @@ def setTrainingArgs(config: Dict, device) -> TrainingArguments:
 
 def train_model(config, device, dataset, collator, model, compute_metrics):
     training_args, early_stopping_callback = setTrainingArgs(config, device)
-    training_args.output_dir = os.path.join(training_args.output_dir, config["model"]["name"])
+    training_args.output_dir = os.path.join(training_args.output_dir, config["model"]["type_model"])
     optimizer = torch.optim.AdamW(model.parameters(), lr=training_args.learning_rate)
     scheduler = get_scheduler(
         training_args.lr_scheduler_type,

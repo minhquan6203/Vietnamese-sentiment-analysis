@@ -16,7 +16,7 @@ class Predict:
         #self.answer_space=['Sadness' 'Surprise' 'Disgust' 'Fear' 'Anger' 'Other' 'Enjoyment']
         self.answer_space =answer_space
         self.model_name =config["model"]["name"]
-        self.checkpoint_path=os.path.join(config["train"]["output_dir"], config["model"]["name"])
+        self.checkpoint_path=os.path.join(config["train"]["output_dir"], config["model"]["type_model"])
         self.checkpoint_model=os.path.join(self.checkpoint_path,min(os.listdir(self.checkpoint_path), key=lambda x: int(x.split('-')[1])),"pytorch_model.bin")
         self.test_path=config['inference']['test_dataset']
         self.bath_size=config['inference']['batch_size']
