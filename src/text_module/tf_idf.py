@@ -11,23 +11,19 @@ class IDFVectorizer(nn.Module):
         self.proj = nn.Linear(self.vocab.vocab_size(), config["text_embedding"]["d_model"])
     
     def compute_idf_vector(self):
-        idf_vector = torch.zeros(len(self.vocab))
-        for i, word in enumerate(self.vocab):
+        idf_vector = torch.zeros(self.vocab.vocab_size())
+        for i, word in enumerate(self.all_word):
             if word in self.word_count:
                 idf_value = torch.log(torch.tensor(len(self.word_count) / self.word_count[word]))
                 idf_vector[i] = idf_value
         return idf_vector
     
     def compute_tf_vector(self, input_text):
-        tf_vector = torch.zeros(len(self.vocab))
+        tf_vector = torch.zeros(self.vocab.vocab_size())
         total_words = len(input_text.split())
         
         for word in input_text.split():
-            word=word.lower()
-            if word in self.vocab:
-                tf_vector[self.vocab.word_to_idx(word)] +=1
-            else:
-                tf_vector[self.vocab.word_to_idx("[UNK]")] +=1
+            tf_vector[self.vocab.word_to_idx.get(word,self.vocab.word_to_idx['[UNK]'])] += 1
         return tf_vector / total_words
     
     def forward(self, input_texts):

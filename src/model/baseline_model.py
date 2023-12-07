@@ -12,10 +12,6 @@ class Baseline_Model(nn.Module):
         self.intermediate_dims = config["model"]["intermediate_dims"]
         self.dropout=config["model"]["dropout"]
         self.d_text = config["text_embedding"]['d_features']
-        self.gamma = config['svm']['gamma']
-        self.kernel_type=config['svm']['kernel_type']
-        self.degree = config['svm']['degree']
-        self.r=config['svm']['r']
 
         self.text_embbeding = build_text_embbeding(config)
         self.classifer = nn.Linear(self.intermediate_dims, num_labels)
@@ -23,8 +19,8 @@ class Baseline_Model(nn.Module):
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
         embbed, mask = self.text_embbeding(text)
-        feat = torch.mean(embbed)
-        logits = self.classifier(feat)
+        mean_pooling = torch.mean(embbed, dim=1)
+        logits = self.classifer(mean_pooling)
         logits = F.log_softmax(logits, dim=-1)
         out = {
             "logits": logits
