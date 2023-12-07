@@ -1,29 +1,31 @@
 import torch
 from torch import nn
+from mask.masking import generate_padding_mask
+from data_utils.vocab import Vocab
 
 class CountVectorizer(nn.Module):
-    def __init__(self, config, vocab):
+    def __init__(self, config):
         super(CountVectorizer, self).__init__()
-        self.vocab = vocab
-        self.word_to_idx = {word: i for i, word in enumerate(vocab)}
-        self.proj = nn.Linear(len(vocab), config["text_embedding"]["d_model"])
+        self.vocab = Vocab(config)
+        self.proj = nn.Linear(self.vocab.vocab_size(), config["text_embedding"]["d_model"])
         
     def forward(self, input_texts):
         count_vectors = []
         
         for input_text in input_texts:
-            word_counts = torch.zeros(len(self.vocab))
+            word_counts = torch.zeros(len(self.vocab.vocab_size()))
             
             for word in input_text.split():
                 word=word.lower()
                 if word in self.vocab:
-                    word_counts[self.vocab.index(word)] += 1
+                    word_counts[self.vocab.word_to_idx(word)] += 1
                 else:
-                    word_counts[self.vocab.index("unknown")] += 1
+                    word_counts[self.vocab.word_to_idx("[UNK]")] += 1
             count_vectors.append(word_counts)
         
         count_vectors = torch.stack(count_vectors, dim=0)  # Xếp các word_counts thành một tensor
         count_vectors = count_vectors.to(self.proj.weight.device)  # Chuyển đổi sang cùng device với self.proj
-        
-        return self.proj(count_vectors).unsqueeze(1)
+        count_vectors = self.proj(count_vectors).unsqueeze(1)
+        padding_mask = generate_padding_mask(count_vectors, padding_idx=0)
+        return count_vectors, padding_mask
 

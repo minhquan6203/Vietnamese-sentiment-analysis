@@ -23,11 +23,7 @@ class TextCNN_Model(nn.Module):
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
-        if self.embed_type not in ['count_vector','tf_idf']:
-            embbed, mask = self.text_embbeding(text)
-        else:
-            embbed=self.text_embbeding(text)
-            mask=None
+        embbed, mask = self.text_embbeding(text)
         logits = self.classifier(embbed)
         logits = F.log_softmax(logits, dim=-1)
         out = {

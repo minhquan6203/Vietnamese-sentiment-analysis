@@ -28,7 +28,7 @@ text_embedding:
   dropout: 0.2
 
 model:
-  type_model: roberta
+  type_model: seq_classify
   name: sentiment_analysis  # Custom name for the model
   intermediate_dims: 512
   dropout: 0.2

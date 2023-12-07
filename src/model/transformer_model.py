@@ -14,18 +14,13 @@ class Trans_Model(nn.Module):
         self.dropout=config["model"]["dropout"]
         self.d_text = config["text_embedding"]['d_features']
         self.text_embbeding = build_text_embbeding(config)
-        self.embed_type=config['text_embedding']['type']
         self.encoder = UniModalEncoder(config)
         self.classifier = nn.Linear(self.intermediate_dims, self.num_labels)
         self.attention_weights = nn.Linear(self.intermediate_dims, 1)
         self.criterion = nn.CrossEntropyLoss()
 
     def forward(self, text: List[str], labels: Optional[torch.LongTensor] = None):
-        if self.embed_type not in ['count_vector','tf_idf']:
-            embbed, mask = self.text_embbeding(text)
-        else:
-            embbed=self.text_embbeding(text)
-            mask=None
+        embbed, mask = self.text_embbeding(text)
         encoded_feature = self.encoder(embbed, mask)
         
         feature_attended = self.attention_weights(torch.tanh(encoded_feature))
