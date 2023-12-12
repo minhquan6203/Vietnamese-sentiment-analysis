@@ -11,7 +11,8 @@ class Attention(nn.Module):
         self.query = nn.Linear(hidden_size, hidden_size)
         self.key = nn.Linear(hidden_size, hidden_size)
         self.value = nn.Linear(hidden_size, hidden_size)
-        self.scale = torch.sqrt(torch.FloatTensor([hidden_size]))
+        self.device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+        self.scale = torch.sqrt(torch.FloatTensor([hidden_size])).to(self.device)
 
     def forward(self, input, mask):
         # input: (batch_size, seq_len, hidden_dim)
@@ -21,7 +22,7 @@ class Attention(nn.Module):
         value = self.value(input)
         
         scores = torch.matmul(query, key.transpose(2, 1)) / self.scale
-        scores.masked_fill_(mask.unsqueeze(1) == 0, -1e9)  # Masking
+        scores.masked_fill_(mask.squeeze(1) == 0, -1e9)  # Masking
         
         attention_weights = F.softmax(scores, dim=-1)
         attended_values = torch.matmul(attention_weights, value)
