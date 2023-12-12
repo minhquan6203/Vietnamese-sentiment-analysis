@@ -5,6 +5,8 @@ from model.seq_classify import createSed_Classify_Model,Sed_Classify_Model
 from model.bert_cnn import createTextCNN_Model,TextCNN_Model
 from model.baseline_model import createBaseline_Model, Baseline_Model
 from model.rnn_model import createRNN_Model,RNN_Model
+from model.lstm_model import createLSTM_Model, LSTM_Model
+from model.rnn_attention_model import createRNN_Attention_Model, RNN_Attention_Model 
 
 def build_model(config, answer_space):
     if config['model']['type_model']=='svm':
@@ -21,6 +23,10 @@ def build_model(config, answer_space):
         return createBaseline_Model(config,answer_space)
     if config['model']['type_model']=='rnn':
         return createRNN_Model(config,answer_space)
+    if config['model']['type_model']=='lstm':
+        return createLSTM_Model(config,answer_space)
+    if config['model']['type_model']=='rnn_att':
+        return createRNN_Attention_Model(config,answer_space)
     
 def get_model(config, num_labels):
     if config['model']['type_model']=='svm':
@@ -37,3 +43,7 @@ def get_model(config, num_labels):
         return Baseline_Model(config,num_labels)
     if config['model']['type_model']=='rnn':
         return RNN_Model(config,num_labels)
+    if config['model']['type_model']=='lstm':
+        return LSTM_Model(config,num_labels)
+    if config['model']['type_model']=='rnn_att':
+        return RNN_Attention_Model(config,num_labels)
